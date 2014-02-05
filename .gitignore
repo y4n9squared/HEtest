@@ -1,0 +1,41 @@
+# Compiled object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Compiled dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Unit test / coverage reports
+.tox/
+.coverage
+nosetests.xml
+coverage.xml
+
+# SCons
+*.log
+.sconsign.dblite
+.sconf_temp/
+
+# Build artifacts
+debug/
+opt/
+

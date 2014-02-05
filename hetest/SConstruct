@@ -1,0 +1,14 @@
+# This is the top level SConstruct file. Below it is one SConscript file per
+# langauge directory. You can build everything by building from this directory
+# or you can go into any subdirectory and, using "scons -u", build just that
+# directory. You can also, of course, specify specific targets regardless of the
+# current directory.
+#
+# See the README for details.
+
+import scons_common as common
+
+SConscript(['cpp/SConscript'], exports="common")
+
+common.GenericTestBuilder.create_all_targets()
+
