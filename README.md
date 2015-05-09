@@ -15,9 +15,14 @@ baseline include some features that are specialized for SPAR submissions.
 Nevertheless, the tools in HEtest are extensible and can easily be used to test
 other homomorphic encryption schemes as well.
 
+A copy of our paper, which was presented at the Workshop on Encrypted Computing
+and Homomorphic Encryption at the 2015 Financial Cryptography and Data Security
+conference, is linked below.
+
 Quick Links
 -----------
 
+- [HETest - A Homomorphic Encryption Testing Framework] (http://eprint.iacr.org/2015/416)
 - [MIT Lincoln Laboratory Project Homepage](http://www.ll.mit.edu/mission/cybersec/softwaretools/hetest/hetest.html)
 - [HElib - Homomorphic encryption library](https://github.com/shaih/HElib)
 
