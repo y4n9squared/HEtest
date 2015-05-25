@@ -1,5 +1,0 @@
-Import('builder')
-
-builder.SConscript('common/SConscript')
-builder.SConscript('stealth/SConscript')
-builder.SConscript('ibm/SConscript')

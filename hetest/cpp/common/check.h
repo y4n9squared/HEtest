@@ -10,10 +10,10 @@
 //
 // Licensed for use under the BSD License as described in the BSD-LICENSE.txt
 // file in the root directory of this release.
-//  
+//
 // Project:            SPAR
 // Authors:            OMD
-// Description:        Assert-like functions. 
+// Description:        Assert-like functions.
 //
 // Modifications:
 // Date          Name           Modification

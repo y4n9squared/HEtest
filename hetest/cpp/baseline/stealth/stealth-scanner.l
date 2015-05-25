@@ -44,7 +44,7 @@
 /* The generated file ends up in a variant directory (./debug for debug builds,
   ./opt for release builds, etc.) so this header will be in the directory above
   when the build happens. */
-#include "../../common/lex-global.h"
+#include "baseline/common/lex-global.h"
 #include "stealth-parser.h"
 
 #define YY_INPUT(buf, result, max_size) \

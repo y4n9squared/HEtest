@@ -39,3 +39,4 @@ coverage.xml
 debug/
 opt/
 
+bazel-*

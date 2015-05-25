@@ -40,6 +40,7 @@ BOOST_AUTO_TEST_CASE(FileHandleOStreamWorks) {
   FileHandleOStream output_stream(fd);
 
   output_stream << "Line 1\n" << "Line 2\n";
+  output_stream.flush();
 
   ifstream instream(tempfile);
   string line;
@@ -56,13 +57,13 @@ BOOST_AUTO_TEST_CASE(FileHandleOStreamWorks) {
 BOOST_AUTO_TEST_CASE(SpawnWorks) {
   // Spawn 'wc' and write some data to it. Make sure the output is as expected.
   auto_ptr<FileHandleIStream> process_stdout;
-  auto_ptr<FileHandleOStream> process_stdin;
-  vector<string> args;
-  SpawnAndConnectPipes("/usr/bin/wc", args, &process_stdin, &process_stdout);
+  {
+    auto_ptr<FileHandleOStream> process_stdin;
+    vector<string> args;
+    SpawnAndConnectPipes("/usr/bin/wc", args, &process_stdin, &process_stdout);
 
-  *process_stdin << "Line 1\nLine 2\n";
-  process_stdin->close();
-
+    *process_stdin << "Line 1\nLine 2\n";
+  }
   string output;
   cout << "Calling getline" << endl;
   getline(*process_stdout, output);

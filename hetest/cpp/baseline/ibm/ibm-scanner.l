@@ -28,7 +28,7 @@
 
 %{
 #include <cstdlib>
-#include "../../common/lex-global.h"
+#include "baseline/common/lex-global.h"
 #include "ibm-parser.h"
 
 #define YY_INPUT(buf, result, max_size) \
