@@ -10,10 +10,10 @@
 //
 // Licensed for use under the BSD License as described in the BSD-LICENSE.txt
 // file in the root directory of this release.
-//  
+//
 // Project:            SPAR
 // Authors:            OMD
-// Description:        Various utilites. 
+// Description:        Various utilites.
 //
 // Modifications:
 // Date          Name           Modification
@@ -25,11 +25,15 @@
 #ifndef CPP_COMMON_UTIL_H_
 #define CPP_COMMON_UTIL_H_
 
-#include <ext/stdio_filebuf.h>
 #include <iostream>
 #include <memory>
 #include <string>
 #include <vector>
+
+#include <boost/iostreams/device/file_descriptor.hpp>
+#include <boost/iostreams/stream.hpp>
+
+namespace io = boost::iostreams;
 
 // Standard C++ doesn't provide any way to create an iostream object from a file
 // handle. But many useful functions (e.g. exec and pipe) return file handles
@@ -41,13 +45,10 @@ class FileHandleOStream : public std::ostream {
   // Construct a output stream for the file handle given by fd.
   FileHandleOStream(int fd);
   virtual ~FileHandleOStream() {}
-  // Close the output stream.
   void close();
+
  private:
-  // This is a g++ extension - it's a filebuf that's constructed from a file
-  // handle.
-  __gnu_cxx::stdio_filebuf<char> buf_;
-  int fd_;
+  io::stream_buffer<io::file_descriptor_sink> fpstream_;
 };
 
 // VERY similar to FileHandleOStream. See that class for details.
@@ -61,9 +62,9 @@ class FileHandleIStream : public std::istream {
   FileHandleIStream(int fd);
   virtual ~FileHandleIStream() {}
   void close();
+
  private:
-  __gnu_cxx::stdio_filebuf<char> buf_;
-  int fd_;
+  io::stream_buffer<io::file_descriptor_source> fpstream_;
 };
 
 // Spawning a child process in C++ is a huge pain - especially if you want to

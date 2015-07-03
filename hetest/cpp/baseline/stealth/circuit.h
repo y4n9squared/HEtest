@@ -10,7 +10,7 @@
 //
 // Licensed for use under the BSD License as described in the BSD-LICENSE.txt
 // file in the root directory of this release.
-//  
+//
 // Project:            SPAR
 // Authors:            Yang
 // Description:        Baseline representation of a Stealth circuit
@@ -29,17 +29,17 @@
 #include <string>
 #include "stealth-circuit-gates.h"
 
-class ParserState;
+struct ParserState;
 class CircuitParser;
 
-// A Circuit object is collection of gates that represent an actual boolean 
+// A Circuit object is collection of gates that represent an actual boolean
 // circuit. It supports a single operation Evaluate(), which returns the output
-// of a circuit given its inputs. 
+// of a circuit given its inputs.
 class Circuit {
 
  public:
   // Evaluates the circuit given the specified input and returns its boolean
-  // value. 
+  // value.
   //
   // input_str: a string of bits of the form: [0, 1, 0, 1, 0, 0]
   //
@@ -48,7 +48,7 @@ class Circuit {
   //
   // short_circuit: boolean parameter which determines whether or not the
   // circuit will short-circuit. If true, the circuit will return its output
-  // immediately after it knows its value. 
+  // immediately after it knows its value.
   bool Evaluate(const std::string& input_str, bool short_circuit);
 
  private:

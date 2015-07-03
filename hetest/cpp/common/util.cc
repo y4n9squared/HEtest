@@ -10,10 +10,10 @@
 //
 // Licensed for use under the BSD License as described in the BSD-LICENSE.txt
 // file in the root directory of this release.
-//  
+//
 // Project:            SPAR
 // Authors:            OMD
-// Description:        Implementation of util methods. 
+// Description:        Implementation of util methods.
 //
 // Modifications:
 // Date          Name           Modification
@@ -33,24 +33,15 @@
 #include "string-algo.h"
 
 FileHandleOStream::FileHandleOStream(int fd)
-    : buf_(fd, std::ios_base::out), fd_(fd) {
-  std::streambuf* old_buffer = rdbuf(&buf_);
-  delete old_buffer;
+    : std::ostream(&fpstream_), fpstream_(fd, io::close_handle) {
 }
 
 void FileHandleOStream::close() {
   flush();
-  ::close(fd_);
 }
 
 FileHandleIStream::FileHandleIStream(int fd)
-    : buf_(fd, std::ios_base::in), fd_(fd) {
-  std::streambuf* old_buffer = rdbuf(&buf_);
-  delete old_buffer;
-}
-
-void FileHandleIStream::close() {
-  ::close(fd_);
+    : std::istream(&fpstream_), fpstream_(fd, io::close_handle) {
 }
 
 // This is pretty much the standard unix fork/exec thing plus we set up file
@@ -159,7 +150,7 @@ void SpawnAndConnectPipes(
 
 std::string ErrorMessageFromErrno(int errnum) {
   const int kBufferSize = 1024;
-  char buffer[kBufferSize]; 
+  char buffer[kBufferSize];
   strerror_r(errnum, buffer, kBufferSize);
   return std::string(buffer);
 }

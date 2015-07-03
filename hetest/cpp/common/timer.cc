@@ -10,7 +10,7 @@
 //
 // Licensed for use under the BSD License as described in the BSD-LICENSE.txt
 // file in the root directory of this release.
-//  
+//
 // Project:            SPAR
 // Authors:            OMD
 // Description:        implementation of Timer class.
@@ -23,32 +23,12 @@
 
 #include "timer.h"
 
-#include <iostream>
+using namespace std::chrono;
 
-using namespace std;
-
-const clockid_t CLOCK_TO_USE = CLOCK_MONOTONIC;
-
-Timer::Timer() {
-}
-
-void Timer::Start() {
-  clock_gettime(CLOCK_TO_USE, &start_);
-}
-
-double Timer::TimespecToDouble(timespec value) {
-  const int NumNanoSecondsPerSecond = 1e9;
-  double ret = value.tv_sec +
-    static_cast<double>(value.tv_nsec) /
-    static_cast<double>(NumNanoSecondsPerSecond);
-  return ret;
-}
-
+void Timer::Start() { start_ = high_resolution_clock::now(); }
 
 double Timer::Elapsed() const {
-  timespec end;
-  clock_gettime(CLOCK_TO_USE, &end);
-  double start_sec = TimespecToDouble(start_);
-  double end_sec = TimespecToDouble(end);
-  return end_sec - start_sec;
+  auto elapsed =
+      duration_cast<duration<double>>(high_resolution_clock::now() - start_);
+  return elapsed.count();
 }

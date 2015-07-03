@@ -27,8 +27,8 @@ builder.Library('ibm-baseline', ['ibm-baseline.cc'],
         libs = ['@baseline', '@ibm-circuit-parser'])
 
 builder.Program('ibm-baseline-main', 'ibm-baseline-main.cc',
-        libs = ['@ibm-baseline'])
+        libs = ['@ibm-baseline', '#boost_system'])
 
 builder.AddBoostTest('ibm-gate_test.cc', libs = ['@ibm-circuit-gates'])
 builder.AddBoostTest('ibm-circuit-parser_test.cc',
-        libs = ['@ibm-circuit-gates', '@ibm-circuit-parser', '@ibm-circuit'])
+        libs = ['@ibm-circuit-gates', '@ibm-circuit-parser', '@ibm-circuit', '#boost_system', '#boost_thread'])

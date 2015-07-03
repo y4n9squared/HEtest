@@ -10,7 +10,7 @@
 //
 // Licensed for use under the BSD License as described in the BSD-LICENSE.txt
 // file in the root directory of this release.
-//  
+//
 // Project:            SPAR
 // Authors:            OMD
 // Description:        Unit tests for Timer class.
@@ -23,33 +23,13 @@
 
 #include "timer.h"
 
-#define BOOST_TEST_MODULE TimerTests 
+#define BOOST_TEST_MODULE TimerTests
 
 #include <iostream>
 
 #include "test-init.h"
 
 using namespace std;
-
-
-BOOST_AUTO_TEST_CASE(TimespecToDoubleCorrect) {
-  Timer timer;
-  timespec ts;
-  // A timespec of 1 millisecond.
-  ts.tv_sec = 0;
-  ts.tv_nsec = 1000000;
-  BOOST_CHECK_EQUAL(timer.TimespecToDouble(ts), 0.001);
-
-  // A timespec of 1.01 seconds
-  ts.tv_sec = 1;
-  ts.tv_nsec = 10000000;
-  BOOST_CHECK_EQUAL(timer.TimespecToDouble(ts), 1.01);
-
-  // A timespec of 2 seconds excactly
-  ts.tv_sec = 2;
-  ts.tv_nsec = 0;
-  BOOST_CHECK_EQUAL(timer.TimespecToDouble(ts), 2);
-}
 
 // Make sure our timer has "pretty good" resolution by making sure it can
 // accurately time events that are pretty fast. Note that the resolution here is

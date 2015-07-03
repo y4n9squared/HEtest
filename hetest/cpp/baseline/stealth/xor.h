@@ -22,7 +22,7 @@
 //****************************************************************
 
 #ifndef CPP_BASELINE_TA2_STEALTH_XOR_H_
-#define CPP_BAsELINE_TA2_STEALTH_XOR_H_
+#define CPP_BASELINE_TA2_STEALTH_XOR_H_
 
 #include "multi-input-gate.h"
 

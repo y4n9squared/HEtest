@@ -28,7 +28,7 @@ builder.Library('stealth-baseline', 'stealth-baseline.cc',
         libs = ['@stealth-circuit-parser','@baseline'])
 
 builder.Program('stealth-baseline-main', 'stealth-baseline-main.cc',
-        libs = ['@stealth-baseline'])
+        libs = ['@stealth-baseline', '#boost_system'])
 
 builder.AddBoostTest('stealth-gate_test.cc', libs = ['@stealth-circuit-gates'])
 

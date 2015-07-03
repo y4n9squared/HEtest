@@ -8,7 +8,7 @@ builder.Library('output-handler',
         ['output-handler.cc'],
         libs = ['#boost_thread',])
 
-builder.Library('timer', 'timer.cc', libs = ['rt',])
+builder.Library('timer', 'timer.cc')
 builder.AddBoostTest('timer_test.cc', libs=['@timer'])
 
 builder.Library('logging', 'logging.cc',
@@ -18,7 +18,7 @@ builder.AddBoostTest('logging_test.cc', libs = ['@logging',])
 builder.Library('string-algo', 'string-algo.cc', libs = ['@logging',])
 builder.AddBoostTest('string-algo_test.cc', libs = ['@string-algo',])
 
-builder.Library('util', 'util.cc', libs = ['@logging', '@string-algo'])
+builder.Library('util', 'util.cc', libs = ['@logging', '@string-algo', '#boost_iostreams'])
 builder.AddBoostTest('util_test.cc', libs = ['@util'])
 
 # The following are testing things that are only in .h files so there's no

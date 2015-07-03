@@ -10,10 +10,10 @@
 //
 // Licensed for use under the BSD License as described in the BSD-LICENSE.txt
 // file in the root directory of this release.
-//  
+//
 // Project:            SPAR
 // Authors:            Yang
-// Description:        A TestScript that executes a specified test 
+// Description:        A TestScript that executes a specified test
 //
 // Modifications:
 // Date          Name           Modification
@@ -49,9 +49,9 @@ class TestScript {
 
   // Begin a test. This method takes as input a file path to the test script.
   // Each test script contains delimiters followed immediately by relative paths
-  // to other files containing the security parameter, circuit description, and 
-  // inputs. Any number of circuits can be specified per security parameter. In 
-  // addition, any number of inputs can be specified per circuit description. An 
+  // to other files containing the security parameter, circuit description, and
+  // inputs. Any number of circuits can be specified per security parameter. In
+  // addition, any number of inputs can be specified per circuit description. An
   // example test script might look like:
   //
   // KEY
@@ -78,10 +78,10 @@ class TestScript {
   void SetDebugLogStream(const std::string& debug_path);
   // Registers a MessageHandler with the TestScript. Each MessageHandler is tied
   // to a specific delimiter. When the TestScript parses a delimeter, it
-  // executes the corresponding MessageHandler by passing it a file stream. 
+  // executes the corresponding MessageHandler by passing it a file stream.
   // The TestScript takes ownership of the MessageHandlers.
   void RegisterHandler(const std::string& delim, MessageHandler* mh);
-  
+
   // Spawns the client process, passing it the arguments specified in args.
   void SpawnClient(const std::string& client_path, const std::string& args);
 
@@ -108,7 +108,7 @@ class TestScript {
   std::unique_ptr<TestHarnessIStream> client_stdout_;
   std::unique_ptr<TestHarnessOStream> server_stdin_;
   std::unique_ptr<TestHarnessIStream> server_stdout_;
- 
+
   std::map<std::string, MessageHandler*> handlers_;
   std::string current_param_;
   std::string current_circuit_;

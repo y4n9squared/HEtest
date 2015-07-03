@@ -10,10 +10,10 @@
 //
 // Licensed for use under the BSD License as described in the BSD-LICENSE.txt
 // file in the root directory of this release.
-//  
+//
 // Project:            SPAR
 // Authors:            Yang
-// Description:        Implementation of TestScript 
+// Description:        Implementation of TestScript
 //
 // Modifications:
 // Date          Name           Modification
@@ -158,32 +158,32 @@ void TestScript::SpawnClient(const string& client_path, const string& args) {
   auto_ptr<FileHandleIStream> out;
   auto_ptr<FileHandleOStream> in;
   SpawnAndConnectPipes(client_path, args, &in, &out);
-  client_stdout_.reset(new TestHarnessIStream(unique_ptr<istream>(move(out))));
-  client_stdin_.reset(new TestHarnessOStream(unique_ptr<ostream>(move(in))));
-}  
+  client_stdout_.reset(new TestHarnessIStream(unique_ptr<istream>(std::move(out))));
+  client_stdin_.reset(new TestHarnessOStream(unique_ptr<ostream>(std::move(in))));
+}
 
 void TestScript::SpawnServer(const string& server_path, const string& args) {
   LOG(INFO) << "Starting the SUT server with command line arguments: " << args;
   auto_ptr<FileHandleIStream> out;
   auto_ptr<FileHandleOStream> in;
   SpawnAndConnectPipes(server_path, args, &in, &out);
-  server_stdout_.reset(new TestHarnessIStream(unique_ptr<istream>(move(out))));
-  server_stdin_.reset(new TestHarnessOStream(unique_ptr<ostream>(move(in))));
+  server_stdout_.reset(new TestHarnessIStream(unique_ptr<istream>(std::move(out))));
+  server_stdin_.reset(new TestHarnessOStream(unique_ptr<ostream>(std::move(in))));
 }
 
 void TestScript::SetDebugLogStream(const string& debug_path) {
   unique_ptr<ostream> server_stdout(
       new ofstream((debug_path + "-server_stdout").c_str()));
-  server_stdout_->SetDebugLogStream(move(server_stdout), false);
+  server_stdout_->SetDebugLogStream(std::move(server_stdout), false);
   unique_ptr<ostream> client_stdout(
       new ofstream((debug_path + "-client_stdout").c_str()));
-  client_stdout_->SetDebugLogStream(move(client_stdout), false);
+  client_stdout_->SetDebugLogStream(std::move(client_stdout), false);
   unique_ptr<ostream> server_stdin(
       new ofstream((debug_path + "-server_stdin").c_str()));
-  server_stdin_->SetDebugLogStream(move(server_stdin), false);
+  server_stdin_->SetDebugLogStream(std::move(server_stdin), false);
   unique_ptr<ostream> client_stdin(
       new ofstream((debug_path + "-client_stdin").c_str()));
-  client_stdin_->SetDebugLogStream(move(client_stdin), false);
+  client_stdin_->SetDebugLogStream(std::move(client_stdin), false);
 }
 
 void TestScript::InitHandlers() {

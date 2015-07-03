@@ -89,8 +89,7 @@ class SconsCPPHelper(object):
         # The no-deprecated-declarations flag is because C++11 deprecates some
         # standard libary class and methods (most notably auto_ptr). Until we
         # convert all our code we'll need this flag.
-        self.env['CCFLAGS'].extend(['-Icpp', '-std=c++0x',
-            '-Wno-deprecated-declarations'])
+        self.env['CCFLAGS'].extend(['-Icpp', '-std=c++11', '-Wno-deprecated-declarations'])
         if scons.GetOption('opt'):
           # Note: -msse2 only works on x86_64. If we ever try to run on other
           # architectures we'll have to disable this.
@@ -136,7 +135,7 @@ class SconsCPPHelper(object):
         # This is the cpp subdirectory of that.
         self.cur_src_dir = os.path.join(str(scons.Dir('#')), 'cpp')
         self.cur_var_dir = os.path.join(self.cur_src_dir, self.build_dir)
-            
+
     def __getattr__(self, attr):
         """Scons provides lots of builder methods and we don't need to override
         all of them but we would like to make them all available to users. If we
@@ -161,8 +160,8 @@ class SconsCPPHelper(object):
         context = scons.Configure(self.env)
         self.__lib_names = {}
         # Check for boost libraries with various names
-        boost_libs = ['boost_thread', 'boost_regex',
-                'boost_unit_test_framework']
+        boost_libs = ['boost_system', 'boost_thread', 'boost_regex',
+                'boost_unit_test_framework', 'boost_iostreams']
         for lib in boost_libs:
             # Prefer the multi-threaded versions (ending in -mt) if available
             if context.CheckLib(lib + '-mt', language = 'C++'):
@@ -379,6 +378,7 @@ class SconsCPPHelper(object):
         the unit test running framework."""
         libs = copy.copy(libs)
         libs.append('boost_unit_test_framework')
+        libs.append('boost_system')
         # The statics library supplies the Initialize() function that every
         # unittest should include (usually via test-init.h).
         libs.append('@statics')

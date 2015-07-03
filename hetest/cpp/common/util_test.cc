@@ -10,10 +10,10 @@
 //
 // Licensed for use under the BSD License as described in the BSD-LICENSE.txt
 // file in the root directory of this release.
-//  
+//
 // Project:            SPAR
 // Authors:            OMD
-// Description:        Unit tests for util.h 
+// Description:        Unit tests for util.h
 //
 // Modifications:
 // Date          Name           Modification
@@ -40,7 +40,6 @@ BOOST_AUTO_TEST_CASE(FileHandleOStreamWorks) {
   FileHandleOStream output_stream(fd);
 
   output_stream << "Line 1\n" << "Line 2\n";
-  output_stream.close();
 
   ifstream instream(tempfile);
   string line;
@@ -56,8 +55,8 @@ BOOST_AUTO_TEST_CASE(FileHandleOStreamWorks) {
 
 BOOST_AUTO_TEST_CASE(SpawnWorks) {
   // Spawn 'wc' and write some data to it. Make sure the output is as expected.
-  auto_ptr<FileHandleOStream> process_stdin;
   auto_ptr<FileHandleIStream> process_stdout;
+  auto_ptr<FileHandleOStream> process_stdin;
   vector<string> args;
   SpawnAndConnectPipes("/usr/bin/wc", args, &process_stdin, &process_stdout);
 
@@ -67,5 +66,5 @@ BOOST_AUTO_TEST_CASE(SpawnWorks) {
   string output;
   cout << "Calling getline" << endl;
   getline(*process_stdout, output);
-  BOOST_CHECK_EQUAL(output, "      2       4      14");
+  BOOST_CHECK_EQUAL(output, "       2       4      14");
 }

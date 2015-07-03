@@ -10,12 +10,12 @@ builder.Library('message-handlers', ['key-message-handler.cc',
 
 builder.Library('test-script', ['test-script.cc'],
         libs = ['@test-harness-streams', '@message-handlers',
-            '@logging', '@timer', '@util'])
+            '@logging', '@timer', '@util', '#boost_system'])
 builder.Program('test-harness', ['test-harness-main.cc'],
         libs = ['@test-script', 'boost_program_options'])
 
 builder.Program('dummy-client', ['dummy-client.cc'], 
-        libs = ['@logging', '@string-algo'])
+        libs = ['@logging', '@string-algo', '#boost_system'])
 
 builder.AddBoostTest('stream-util_test.cc', libs = ['@test-harness-streams'])
 

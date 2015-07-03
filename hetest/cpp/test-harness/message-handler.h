@@ -10,10 +10,10 @@
 //
 // Licensed for use under the BSD License as described in the BSD-LICENSE.txt
 // file in the root directory of this release.
-//  
+//
 // Project:            SPAR
 // Authors:            Yang
-// Description:        Base class for message handlers 
+// Description:        Base class for message handlers
 //
 // Modifications:
 // Date          Name           Modification
@@ -43,6 +43,8 @@ class MessageHandler {
   // Constructor sets the result log.
   MessageHandler(std::ostream* log) : log_(log) {
   }
+
+  virtual ~MessageHandler() = default;
 
   // Send must implement the specific protocol for either key-exchange, circuit
   // ingestion, or evaluation. Subclasses are responsible for writing the the
