@@ -18,19 +18,19 @@
 // Modifications:
 // Date          Name           Modification
 // ----         ----           ------------
-// 25 Sep 2012  yang            Original Version
+// 25 Sep 2012   yang          Original Version
 //*****************************************************************
 
-
-#ifndef CPP_TEST_HARNESS_TA2_TEST_SCRIPT_H_
-#define CPP_TEST_HARNESS_TA2_TEST_SCRIPT_H_
+#ifndef TEST_HARNESS_TEST_SCRIPT_H_
+#define TEST_HARNESS_TEST_SCRIPT_H_
 
 #include <string>
-#include <map>
-#include "key-message-handler.h"
-#include "circuit-message-handler.h"
-#include "input-message-handler.h"
-#include "stream-util.h"
+#include <unordered_map>
+
+#include "test-harness/circuit-message-handler.h"
+#include "test-harness/input-message-handler.h"
+#include "test-harness/key-message-handler.h"
+#include "test-harness/stream-util.h"
 
 // A TestScript spawns the client and server instances of the SUT or baseline
 // and executes a series of key exchange, circuit ingestion, and homomorphic
@@ -39,10 +39,9 @@
 // communication is performed by the message handlers.
 class TestScript {
  public:
-
   // Creates a new file named "results" to log timing and correctness
   // information from the test.
-  TestScript();
+  TestScript() = default;
 
   // Frees all registered MessageHandlers.
   ~TestScript();
@@ -76,6 +75,7 @@ class TestScript {
   // the client/server. Each file name is prefixed by debug_path. Setting a
   // logger may impact the performance of executing tests.
   void SetDebugLogStream(const std::string& debug_path);
+
   // Registers a MessageHandler with the TestScript. Each MessageHandler is tied
   // to a specific delimiter. When the TestScript parses a delimeter, it
   // executes the corresponding MessageHandler by passing it a file stream.
@@ -100,8 +100,7 @@ class TestScript {
   const static std::string INPUT_DELIM;
 
  private:
-
-  void SaveState(std::string delim, std::string path);
+  void SaveState(const std::string& delim, const std::string& path);
   void Run(std::istream& script);
 
   std::unique_ptr<TestHarnessOStream> client_stdin_;
@@ -109,7 +108,7 @@ class TestScript {
   std::unique_ptr<TestHarnessOStream> server_stdin_;
   std::unique_ptr<TestHarnessIStream> server_stdout_;
 
-  std::map<std::string, MessageHandler*> handlers_;
+  std::unordered_map<std::string, MessageHandler*> handlers_;
   std::string current_param_;
   std::string current_circuit_;
   unsigned int line_num_;

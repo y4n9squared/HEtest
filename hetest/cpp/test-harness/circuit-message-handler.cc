@@ -10,10 +10,10 @@
 //
 // Licensed for use under the BSD License as described in the BSD-LICENSE.txt
 // file in the root directory of this release.
-//  
+//
 // Project:            SPAR
 // Authors:            Yang
-// Description:        Implementation of CircuitMessageHandler 
+// Description:        Implementation of CircuitMessageHandler
 //
 // Modifications:
 // Date          Name           Modification
@@ -21,37 +21,40 @@
 // 26 Sep 2012  yang            Original Version
 //*****************************************************************
 
-#include "circuit-message-handler.h"
+#include "test-harness/circuit-message-handler.h"
+
+#include <chrono>
+#include <string>
+
 #include "common/check.h"
 
-using namespace std;
+CircuitMessageHandler::CircuitMessageHandler(std::ostream* log)
+    : MessageHandler(log) {}
 
-CircuitMessageHandler::CircuitMessageHandler(ostream* log) 
-    : MessageHandler(log) {
-}
-
-void CircuitMessageHandler::Send(istream* circuit_stream) {
-  timer().Start();
+void CircuitMessageHandler::Send(std::istream* circuit_stream) {
+  auto start = std::chrono::high_resolution_clock::now();
   server_stdin()->Write("CIRCUIT");
-  string line;
+  std::string line;
   while (circuit_stream->good()) {
     getline(*circuit_stream, line);
     if (line != "") {
       server_stdin()->Write(line);
     }
   }
-  CHECK(circuit_stream->eof() == true);
+  CHECK(circuit_stream->eof());
   server_stdin()->Write("ENDCIRCUIT");
-  
+
   server_stdout()->Read(&line);
-  CHECK(line == "CIRCUIT") << "Expected CIRCUIT header but got " << line;
+  CHECK(line == "CIRCUIT") << "Expected 'CIRCUIT'. Got '" << line << "'";
   server_stdout()->Read(&line);
 
-  CHECK(line == "CIRCUIT READY") << "Expected CIRCUIT READY but got " << line;
+  CHECK(line == "CIRCUIT READY") << "Expected 'CIRCUIT READY'. Got '" << line
+                                 << "'";
   server_stdout()->Read(&line);
-  CHECK(line == "ENDCIRCUIT") << "Expected ENDCIRCUIT but got " << line;
-  
-  double ingestion_time = timer().Elapsed();
-  *log() << "INGESTION " << ingestion_time << endl;
+  CHECK(line == "ENDCIRCUIT") << "Expected 'ENDCIRCUIT'. Got '" << line << "'";
+
+  auto ingestion_time =
+      std::chrono::duration_cast<std::chrono::duration<double>>(
+          std::chrono::high_resolution_clock::now() - start);
+  *log() << "INGESTION " << ingestion_time.count() << std::endl;
 }
-

@@ -10,10 +10,10 @@
 //
 // Licensed for use under the BSD License as described in the BSD-LICENSE.txt
 // file in the root directory of this release.
-//  
+//
 // Project:            SPAR
 // Authors:            Yang
-// Description:        Implementation of CircuitParser 
+// Description:        Implementation of CircuitParser
 //
 // Modifications:
 // Date          Name           Modification
@@ -23,7 +23,6 @@
 
 #include "circuit.h"
 #include "common/check.h"
-#include "common/string-algo.h"
 
 using namespace std;
 
@@ -54,7 +53,7 @@ void Circuit::Parse(const string& input) {
       }
     }
   }
-  CHECK(wire_index == wires_->size()) << "Wire index is " << wire_index 
+  CHECK(wire_index == wires_->size()) << "Wire index is " << wire_index
       << ". Expected " << wires_->size();
 }
 

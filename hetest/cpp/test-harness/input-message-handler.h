@@ -10,20 +10,19 @@
 //
 // Licensed for use under the BSD License as described in the BSD-LICENSE.txt
 // file in the root directory of this release.
-//  
+//
 // Project:            SPAR
 // Authors:            Yang
-// Description:        A class for executing an input round with the SUT  
+// Description:        A class for executing an input round with the SUT
 //
 // Modifications:
 // Date          Name           Modification
 // ----          ----           ------------
-// 26 Sep 2012  yang            Original Version
+// 26 Sep 2012   yang           Original Version
 //*****************************************************************
 
-
-#ifndef CPP_TEST_HARNESS_TA2_INPUT_MESSAGE_HANDLER_H_
-#define CPP_TEST_HARNESS_TA2_INPUT_MESSAGE_HANDLER_H_
+#ifndef TEST_HARNESS_INPUT_MESSAGE_HANDLER_H_
+#define TEST_HARNESS_INPUT_MESSAGE_HANDLER_H_
 
 #include "message-handler.h"
 
@@ -31,15 +30,14 @@
 // and server for encryption, homomorphic evaluation, and decryption of inputs.
 class InputMessageHandler : public MessageHandler {
  public:
- 
   InputMessageHandler(std::ostream* log);
- 
+
   // This method implements the actual communication protocol.
   //
-  // The method will send the client a PDATA message containing the plain-text 
+  // The method will send the client a PDATA message containing the plain-text
   // input and wait for an EDATA response containing the encrypted input. Once
   // received, it will forward the encrypted input to the server in an EDATA
-  // message and wait for an encrypted result. Finally, it will forward the 
+  // message and wait for an encrypted result. Finally, it will forward the
   // encrypted result to the client and wait for a decrypted result.
   //
   // If in any part of this communication, an unexpected message is encountered,

@@ -21,13 +21,12 @@
 // 09 Nov 2012  yang            Original Version
 //*****************************************************************
 
-
-#ifndef CPP_TEST_HARNESS_TA2_MESSAGE_HANDLER_H_
-#define CPP_TEST_HARNESS_TA2_MESSAGE_HANDLER_H_
+#ifndef TEST_HARNESS_MESSAGE_HANDLER_H_
+#define TEST_HARNESS_MESSAGE_HANDLER_H_
 
 #include <iostream>
+
 #include "stream-util.h"
-#include "common/timer.h"
 
 // MessageHandler is the base class for KeyMessageHandler,
 // CircuitMessageHandler, and InputMessageHandler. It contains the pointers to
@@ -37,12 +36,9 @@
 // Subclasses need to implement the Send() method, which takes an input stream
 // containing the data to be sent to either the SUT client or server.
 class MessageHandler {
-
  public:
-
   // Constructor sets the result log.
-  MessageHandler(std::ostream* log) : log_(log) {
-  }
+  MessageHandler(std::ostream* log) : log_(log) {}
 
   virtual ~MessageHandler() = default;
 
@@ -68,38 +64,21 @@ class MessageHandler {
     server_stdout_ = server_stdout;
   }
 
-  inline TestHarnessOStream* client_stdin() {
-    return client_stdin_;
-  }
+  inline TestHarnessOStream* client_stdin() { return client_stdin_; }
 
-  inline TestHarnessIStream* client_stdout() {
-    return client_stdout_;
-  }
+  inline TestHarnessIStream* client_stdout() { return client_stdout_; }
 
-  inline TestHarnessOStream* server_stdin() {
-    return server_stdin_;
-  }
+  inline TestHarnessOStream* server_stdin() { return server_stdin_; }
 
-  inline TestHarnessIStream* server_stdout() {
-    return server_stdout_;
-  }
+  inline TestHarnessIStream* server_stdout() { return server_stdout_; }
 
-  inline Timer& timer() {
-    return timer_;
-  }
-
-  inline std::ostream* log() {
-    return log_;
-  }
+  inline std::ostream* log() { return log_; }
 
  private:
-
   TestHarnessOStream* client_stdin_;
   TestHarnessIStream* client_stdout_;
   TestHarnessOStream* server_stdin_;
   TestHarnessIStream* server_stdout_;
   std::ostream* log_;
-  Timer timer_;
-
 };
 #endif

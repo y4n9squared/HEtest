@@ -22,6 +22,48 @@ cc_library(
    ],
 )
 
+cc_test(
+    name = "circuit-handler-test",
+    srcs = [
+        "circuit-message-handler_test.cc",
+    ],
+    deps = [
+        ":test-harness-lib",
+    ],
+    linkopts = [
+        "-lboost_unit_test_framework",
+        "-lboost_system"
+    ],
+)
+
+cc_test(
+    name = "key-handler-test",
+    srcs = [
+        "key-message-handler_test.cc",
+    ],
+    deps = [
+        ":test-harness-lib",
+    ],
+    linkopts = [
+        "-lboost_unit_test_framework",
+        "-lboost_system"
+    ],
+)
+
+cc_test(
+    name = "stream-util-test",
+    srcs = [
+        "stream-util_test.cc",
+    ],
+    deps = [
+        ":test-harness-lib",
+    ],
+    linkopts = [
+        "-lboost_unit_test_framework",
+        "-lboost_system"
+    ],
+)
+
 cc_binary(
     name = "dummy-client",
     srcs = [
@@ -29,6 +71,9 @@ cc_binary(
     ],
     deps = [
         "//common:common",
+    ],
+    linkopts = [
+        "-lboost_system",
     ],
 )
 

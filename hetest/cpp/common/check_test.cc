@@ -10,10 +10,10 @@
 //
 // Licensed for use under the BSD License as described in the BSD-LICENSE.txt
 // file in the root directory of this release.
-//  
+//
 // Project:            SPAR
 // Authors:            OMD
-// Description:        Unit tests for the functions in check.h 
+// Description:        Unit tests for the functions in check.h
 //
 // Modifications:
 // Date          Name           Modification
@@ -23,13 +23,14 @@
 
 #define BOOST_TEST_MODULE CheckTest
 
-#include <boost/regex.hpp>
 #include <iostream>
 #include <string>
 #include <vector>
 
+#include <boost/algorithm/string.hpp>
+#include <boost/regex.hpp>
+
 #include "logging.h"
-#include "string-algo.h"
 #include "test-init.h"
 
 #define NO_DEATH_ON_CHECK_FAIL
@@ -38,8 +39,6 @@
 
 using boost::regex_search;
 using boost::regex;
-using std::string;
-using std::vector;
 
 BOOST_AUTO_TEST_CASE(CheckBasic) {
   std::stringstream test_stream;
@@ -76,7 +75,7 @@ BOOST_AUTO_TEST_CASE(DCheckBasic) {
   CHECK(7 == 11);
   expected_re = "Check '7 == 11' failed in .*check_test.cc on line \\d+";
   BOOST_CHECK(regex_search(test_stream.str(), expected_re));
-  
+
 }
 #endif
 
@@ -86,7 +85,9 @@ BOOST_AUTO_TEST_CASE(CheckAsStream) {
   Log::SetOutputStream(&test_stream);
 
   CHECK(false) << "This is my output: " << 22;
-  vector<string> lines = Split(test_stream.str(), '\n');
+  std::vector<std::string> lines;
+  std::string test_stream_str = test_stream.str();
+  boost::split(lines, test_stream_str, boost::is_any_of("\n"));
   BOOST_REQUIRE_EQUAL(lines.size(), 3);
   regex expected_line_1_re(
       "Check 'false' failed in .*check_test.cc on line \\d+");

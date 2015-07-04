@@ -10,10 +10,10 @@
 //
 // Licensed for use under the BSD License as described in the BSD-LICENSE.txt
 // file in the root directory of this release.
-//  
+//
 // Project:            SPAR
 // Authors:            Yang
-// Description:        Sends a circuit description to the SUT server 
+// Description:        Sends a circuit description to the SUT server
 //
 // Modifications:
 // Date          Name           Modification
@@ -21,17 +21,15 @@
 // 26 Sep 2012  yang            Original Version
 //*****************************************************************
 
+#ifndef TEST_HARNESS_CIRCUIT_MESSAGE_HANDLER_H_
+#define TEST_HARNESS_CIRCUIT_MESSAGE_HANDLER_H_
 
-#ifndef CPP_TEST_HARNESS_TA2_CIRCUIT_MESSAGE_HANDLER_H_
-#define CPP_TEST_HARNESS_TA2_CIRCUIT_MESSAGE_HANDLER_H_
-
-#include "message-handler.h"
+#include "test-harness/message-handler.h"
 
 // CircuitMessageHandler implements the communication protocol for passing the
 // circuit description and public key to the SUT server.
 class CircuitMessageHandler : public MessageHandler {
  public:
-
   CircuitMessageHandler(std::ostream* log);
 
   // This method implements the actual communication protocol. It takes as input

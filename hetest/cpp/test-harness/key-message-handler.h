@@ -10,20 +10,19 @@
 //
 // Licensed for use under the BSD License as described in the BSD-LICENSE.txt
 // file in the root directory of this release.
-//  
+//
 // Project:            SPAR
 // Authors:            Yang
-// Description:        Executes a key-exchange round with the SUT 
+// Description:        Executes a key-exchange round with the SUT
 //
 // Modifications:
 // Date          Name           Modification
 // ----          ----           ------------
-// 26 Sep 2012  yang            Original Version
+// 26 Sep 2012   yang           Original Version
 //*****************************************************************
 
-
-#ifndef CPP_TEST_HARNESS_TA2_KEY_MESSAGE_HANDLER_H_
-#define CPP_TEST_HARNESS_TA2_KEY_MESSAGE_HANDLER_H_
+#ifndef TEST_HARNESS_KEY_MESSAGE_HANDLER_H_
+#define TEST_HARNESS_KEY_MESSAGE_HANDLER_H_
 
 #include "message-handler.h"
 
@@ -31,7 +30,6 @@
 // with the SUT client.
 class KeyMessageHandler : public MessageHandler {
  public:
-
   // Constructor takes as input the result log stream.
   KeyMessageHandler(std::ostream* log);
 
@@ -39,6 +37,5 @@ class KeyMessageHandler : public MessageHandler {
   // the security parameter and wait for the expected response. The method
   // transmits the public key from the client to the server.
   virtual void Send(std::istream* is);
-
 };
 #endif

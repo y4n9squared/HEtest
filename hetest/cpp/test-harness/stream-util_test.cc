@@ -1,25 +1,51 @@
-#include <sstream>
-#include "stream-util.h"
+//*****************************************************************
+// Copyright (c) 2013 Massachusetts Institute of Technology
+//
+// Developed exclusively at US Government expense under US Air Force contract
+// FA8721-05-C-002. The rights of the United States Government to use, modify,
+// reproduce, release, perform, display or disclose this computer software and
+// computer software documentation in whole or in part, in any manner and for
+// any purpose whatsoever, and to have or authorize others to do so, are
+// Unrestricted and Unlimited.
+//
+// Licensed for use under the BSD License as described in the BSD-LICENSE.txt
+// file in the root directory of this release.
+//
+// Project:            SPAR
+// Authors:            Yang
+// Description:        Unit tests for StreamUtil
+//
+// Modifications:
+// Date          Name           Modification
+// ----          ----           ------------
+// 26 Sep 2012   yang            Original Version
+//*****************************************************************
 
-#define BOOST_TEST_MODULE 
+#include "test-harness/stream-util.h"
+
+#include <istream>
+#include <memory>
+#include <ostream>
+#include <sstream>
+
+#define BOOST_TEST_MODULE
 #define BOOST_TEST_DYN_LINK
 
 #include <boost/test/unit_test.hpp>
-#include "common/test-init.h"
 
-using namespace std;
+#include "common/test-init.h"
 
 BOOST_AUTO_TEST_CASE(TestHarnessOStreamWorks) {
 
-  stringstream* sut = new stringstream();
-  unique_ptr<ostream> ofs(sut);
-  TestHarnessOStream output_stream(move(ofs));
-  stringstream* log = new stringstream();
-  unique_ptr<ostream> logger(log);
-  output_stream.SetDebugLogStream(move(logger), true);
-  
-  output_stream.Write("HELLO");
-  output_stream.Write("WORLD");
+  auto sut = new std::stringstream();
+  std::unique_ptr<std::ostream> ofs(sut);
+  TestHarnessOStream output_stream(std::move(ofs));
+
+  auto log = new std::stringstream();
+  std::unique_ptr<std::ostream> logger(log);
+  output_stream.SetDebugLogStream(std::move(logger), true);
+
+  output_stream.Write("HELLO\nWORLD");
   const char* buf = "Hello World";
   output_stream.Write(buf, 11);
 
@@ -29,21 +55,19 @@ BOOST_AUTO_TEST_CASE(TestHarnessOStreamWorks) {
 
 BOOST_AUTO_TEST_CASE(TestHarnessIStreamWorks) {
 
-  stringstream* sut = new stringstream();
-  stringstream* log = new stringstream();
-      
+  auto sut = new std::stringstream();
+  auto log = new std::stringstream();
 
-  *sut << "FOO" << endl;
-  *sut << "BAR" << endl;
+  *sut << "FOO\nBAR" << std::endl;
   const char* buf = "Foo bar";
   sut->write(buf, 7);
 
-  unique_ptr<istream> ifs(sut);
-  TestHarnessIStream input_stream(move(ifs));
-  unique_ptr<ostream> logger(log);
-  input_stream.SetDebugLogStream(move(logger), true);
+  std::unique_ptr<std::istream> ifs(sut);
+  TestHarnessIStream input_stream(std::move(ifs));
+  std::unique_ptr<std::ostream> logger(log);
+  input_stream.SetDebugLogStream(std::move(logger), true);
 
-  string line;
+  std::string line;
   input_stream.Read(&line);
   BOOST_CHECK_EQUAL(line, "FOO");
   input_stream.Read(&line);
@@ -52,7 +76,5 @@ BOOST_AUTO_TEST_CASE(TestHarnessIStreamWorks) {
   input_stream.Read(input_buf, 7);
   input_buf[7] = '\0';
   BOOST_CHECK_EQUAL(buf, "Foo bar");
-  
   BOOST_CHECK_EQUAL(log->str(), "FOO\nBAR\nFoo bar");
-  
 }

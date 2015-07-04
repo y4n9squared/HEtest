@@ -27,28 +27,25 @@
 #include <cstdlib>
 #include <cstring>
 #include <unistd.h>
-#include <unistd.h>
 
-#include "logging.h"
-#include "string-algo.h"
+#include <boost/algorithm/string.hpp>
+
+#include "common/logging.h"
 
 FileHandleOStream::FileHandleOStream(int fd)
-    : std::ostream(&fpstream_), fpstream_(fd, io::close_handle) {
-}
+    : std::ostream(&fpstream_), fpstream_(fd, io::close_handle) {}
 
-void FileHandleOStream::close() {
-  flush();
-}
+void FileHandleOStream::close() { flush(); }
 
 FileHandleIStream::FileHandleIStream(int fd)
-    : std::istream(&fpstream_), fpstream_(fd, io::close_handle) {
-}
+    : std::istream(&fpstream_), fpstream_(fd, io::close_handle) {}
 
 // This is pretty much the standard unix fork/exec thing plus we set up file
 // handles for the subprocess' stdin/stdout.
-void SpawnAndConnectPipes(
-    const std::string& executable, const std::vector<std::string>& args,
-    int* process_stdin_handle, int* process_stdout_handle) {
+void SpawnAndConnectPipes(const std::string& executable,
+                          const std::vector<std::string>& args,
+                          int* process_stdin_handle,
+                          int* process_stdout_handle) {
   // File descriptors for the pipe that the parent writes to to send data tot he
   // child and the pipe the child writes to to send data to the parent.
   int parent_to_child[2];
@@ -99,7 +96,7 @@ void SpawnAndConnectPipes(
     strcpy(exec_args[0], executable.c_str());
     for (unsigned int i = 0; i < args.size(); ++i) {
       exec_args[i + 1] = new char[args[i].size() + 1];
-      strcpy(exec_args[i+1], args[i].c_str());
+      strcpy(exec_args[i + 1], args[i].c_str());
     }
     exec_args[args.size() + 1] = 0;
     execv(executable.c_str(), exec_args);
@@ -118,11 +115,10 @@ void SpawnAndConnectPipes(
   }
 }
 
-
-void SpawnAndConnectPipes(
-    const std::string& executable, const std::vector<std::string>& args,
-    std::auto_ptr<FileHandleOStream>* process_stdin,
-    std::auto_ptr<FileHandleIStream>* process_stdout) {
+void SpawnAndConnectPipes(const std::string& executable,
+                          const std::vector<std::string>& args,
+                          std::auto_ptr<FileHandleOStream>* process_stdin,
+                          std::auto_ptr<FileHandleIStream>* process_stdout) {
   int stdin_h, stdout_h;
   SpawnAndConnectPipes(executable, args, &stdin_h, &stdout_h);
   // Wrap the ends that are connected to stdin/stdout with a iostream.
@@ -130,20 +126,20 @@ void SpawnAndConnectPipes(
   process_stdin->reset(new FileHandleOStream(stdin_h));
 }
 
-void SpawnAndConnectPipes(
-    const std::string & executable, const std::string& args,
-    std::auto_ptr<FileHandleOStream>* process_stdin,
-    std::auto_ptr<FileHandleIStream>* process_stdout) {
+void SpawnAndConnectPipes(const std::string& executable,
+                          const std::string& args,
+                          std::auto_ptr<FileHandleOStream>* process_stdin,
+                          std::auto_ptr<FileHandleIStream>* process_stdout) {
   std::vector<std::string> args_vec;
-  Split(args, ' ', &args_vec);
+  boost::split(args_vec, args, boost::is_any_of(" "));
   SpawnAndConnectPipes(executable, args_vec, process_stdin, process_stdout);
 }
 
-void SpawnAndConnectPipes(
-    const std::string& executable, const std::string& args,
-    int* process_stdin_handle, int* process_stdout_handle) {
+void SpawnAndConnectPipes(const std::string& executable,
+                          const std::string& args, int* process_stdin_handle,
+                          int* process_stdout_handle) {
   std::vector<std::string> args_vec;
-  Split(args, ' ', &args_vec);
+  boost::split(args_vec, args, boost::is_any_of(" "));
   SpawnAndConnectPipes(executable, args_vec, process_stdin_handle,
                        process_stdout_handle);
 }
