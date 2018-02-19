@@ -22,7 +22,7 @@ conference, is linked below.
 Quick Links
 -----------
 
-- [HETest - A Homomorphic Encryption Testing Framework] (http://eprint.iacr.org/2015/416)
+- [HETest - A Homomorphic Encryption Testing Framework](http://eprint.iacr.org/2015/416)
 - [MIT Lincoln Laboratory Project Homepage](http://www.ll.mit.edu/mission/cybersec/softwaretools/hetest/hetest.html)
 - [HElib - Homomorphic encryption library](https://github.com/shaih/HElib)
 
